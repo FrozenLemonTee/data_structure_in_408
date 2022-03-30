@@ -19,8 +19,7 @@ typedef struct ordered_list {
 // 顺序表初始化
 ordered_list* list_init(int max_size){
     ordered_list* list = (ordered_list*)std::malloc(sizeof(ordered_list));
-    int list_body[max_size];
-    list->list_body = list_body;
+    list->list_body = (int*)std::malloc(sizeof(int) * max_size);
     list->max_size = max_size;
     list->cnt = 0;
     return list;
@@ -61,7 +60,6 @@ int list_locate_elem(ordered_list* list, int val){
 // 按位查找某元素的值
 int list_get_elem(ordered_list* list, int index){
     index_check(list, index);
-//    std::cout << "test(" << list->list_body[index] << ")";
     return list->list_body[index];
 }
 
@@ -77,8 +75,8 @@ void list_insert(ordered_list* list, int index, int val){
         throw "Can not insert element";
     }
     list->cnt += 1;
-    for (int i = list_length(list); i >= index; --i) {
-        list->list_body[i] = list->list_body[i-1];
+    for (int i = list_length(list) - 1; i > index; --i) {
+        list_set_elem(list, i, list_get_elem(list, i-1));
     }
     list_set_elem(list, index, val);
 }
@@ -89,7 +87,7 @@ int list_pop(ordered_list* list, int index){
         throw "Can not pop element";
     }
     int val = list_get_elem(list, index);
-    for (int i = index; i < list_length(list); ++i) {
+    for (int i = index; i < list_length(list) - 1; ++i) {
         list_set_elem(list, i, list_get_elem(list, i+1));
     }
     list->cnt -= 1;
@@ -103,4 +101,9 @@ void list_print(ordered_list* list){
         std::cout << list_get_elem(list, i) << ",";
     }
     std::cout << "]";
+}
+
+// 清空列表的存储空间
+void list_delete(ordered_list* list){
+    free(list);
 }
