@@ -19,8 +19,7 @@ typedef struct ordered_list {
 // 顺序表初始化
 ordered_list* list_init(int max_size){
     ordered_list* list = (ordered_list*)std::malloc(sizeof(ordered_list));
-    int list_body[max_size];
-    list->list_body = list_body;
+    list->list_body = (int*)std::malloc(sizeof(int) * max_size);
     list->max_size = max_size;
     list->cnt = 0;
     return list;
@@ -77,7 +76,7 @@ void list_insert(ordered_list* list, int index, int val){
         throw "Can not insert element";
     }
     list->cnt += 1;
-    for (int i = list_length(list); i >= index; --i) {
+    for (int i = list_length(list) - 1; i > index; --i) {
         list->list_body[i] = list->list_body[i-1];
     }
     list_set_elem(list, index, val);
@@ -88,11 +87,11 @@ int list_pop(ordered_list* list, int index){
     if (empty_check(list)){
         throw "Can not pop element";
     }
+    list->cnt -= 1;
     int val = list_get_elem(list, index);
     for (int i = index; i < list_length(list); ++i) {
         list_set_elem(list, i, list_get_elem(list, i+1));
     }
-    list->cnt -= 1;
     return val;
 }
 
