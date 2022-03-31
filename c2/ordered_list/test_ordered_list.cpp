@@ -2,13 +2,13 @@
 
 #define LEN 50
 
-int rand_index(int range_a, int range_b){
+int rand_range(int range_a, int range_b){
     return range_b ? range_a + rand() % range_b : range_a;
 }
 
 void test_insert(ordered_list* list, int num, int flag){
     for (int i = 0; i < num; ++i) {
-        int index = rand_index(0, list_length(list));
+        int index = rand_range(0, list_length(list));
         if (flag){
             std::cout << "cur index: " << index << ", " << "cur elem: " << i << " ";
         }
@@ -23,7 +23,7 @@ void test_insert(ordered_list* list, int num, int flag){
 
 void test_pop(ordered_list* list, int num){
     for (int i = 0; i < num; ++i) {
-        int index = rand_index(0, list_length(list));
+        int index = rand_range(0, list_length(list));
         int val = list_pop(list, index);
         std::cout << "cur index: " << index << ", " << "cur elem: " << val << " ";
         list_print(list);
@@ -33,7 +33,7 @@ void test_pop(ordered_list* list, int num){
 
 void test_find_val(ordered_list* list, int num){
     for (int i = 0; i < num; ++i) {
-        int val = rand_index(0, 2*LEN);
+        int val = rand_range(0, 2 * LEN);
         int index = list_locate_elem(list, val);
         std::cout << "cur val: " << val << ", " << "cur elem index: " << index << " ";
         list_print(list);
