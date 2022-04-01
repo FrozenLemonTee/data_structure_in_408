@@ -6,6 +6,7 @@
 #define C_C___ORDERED_LIST_H
 
 #endif //C_C___ORDERED_LIST_H
+#include "D:\FrozenLemonTee\Arbeit\Programmiersprache\C&C++\src\data_sctructure_in_408\global.h"
 #include "cstdlib"
 #include "iostream"
 
@@ -32,8 +33,8 @@ int list_length(ordered_list* list){
 
 // 辅助函数，检查索引是否非法
 void index_check(ordered_list* list, int index){
-    if (index < 0 || index >= list_length(list)){ // 索引非法则抛出异常
-        throw "Illegal index";
+    if (index < 0 || index >= list_length(list)){
+        error("Illegal index", 100);
     }
 }
 
@@ -72,7 +73,7 @@ void list_set_elem(ordered_list* list, int index, int val){
 // 插入新元素
 void list_insert(ordered_list* list, int index, int val){
     if (max_size_check(list)){
-        throw "Can not insert element";
+        error("Can not insert element", 101);
     }
     list->cnt += 1;
     for (int i = list_length(list) - 1; i > index; --i) {
@@ -84,7 +85,7 @@ void list_insert(ordered_list* list, int index, int val){
 // 将元素从表中删除并返回
 int list_pop(ordered_list* list, int index){
     if (empty_check(list)){
-        throw "Can not pop element";
+        error("Can not pop element", 102);
     }
     int val = list_get_elem(list, index);
     for (int i = index; i < list_length(list) - 1; ++i) {
