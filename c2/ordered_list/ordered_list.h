@@ -6,7 +6,7 @@
 #define C_C___ORDERED_LIST_H
 
 #endif //C_C___ORDERED_LIST_H
-#include "D:\FrozenLemonTee\Arbeit\Programmiersprache\C&C++\src\data_sctructure_in_408\global.h"
+#include "global.cpp"
 #include "cstdlib"
 #include "iostream"
 
