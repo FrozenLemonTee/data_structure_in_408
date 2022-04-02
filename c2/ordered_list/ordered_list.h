@@ -6,7 +6,7 @@
 #define C_C___ORDERED_LIST_H
 
 #endif //C_C___ORDERED_LIST_H
-#include "global.cpp"
+#include "global.h"
 #include "cstdlib"
 #include "iostream"
 

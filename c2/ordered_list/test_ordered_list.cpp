@@ -2,10 +2,7 @@
 
 #define LEN 50
 
-int rand_range(int range_a, int range_b){
-    return range_b ? range_a + rand() % range_b : range_a;
-}
-
+// flag: 是否输出提示信息
 void test_insert(ordered_list* list, int num, int flag){
     for (int i = 0; i < num; ++i) {
         int index = rand_range(0, list_length(list));
