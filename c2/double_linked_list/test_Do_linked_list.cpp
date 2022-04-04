@@ -1,5 +1,7 @@
-#include "linked_list.h"
-
+//
+// Created by Lenovo on 2022/4/4.
+//
+#include "Do_linked_list.h"
 #define LEN 40
 
 list_node* new_node(){
@@ -7,7 +9,7 @@ list_node* new_node(){
 }
 
 // flag: 是否输出提示信息
-void test_insert(linked_list* list, int num, int flag){
+void test_insert(Do_linked_list* list, int num, int flag){
     for (int i = 0; i < num; ++i) {
         int index = rand_range(0, list_length(list));
         list_node* node = new_node();
@@ -24,7 +26,7 @@ void test_insert(linked_list* list, int num, int flag){
     }
 }
 
-void test_pop(linked_list* list, int num){
+void test_pop(Do_linked_list * list, int num){
     for (int i = 0; i < num; ++i) {
         int index = rand_range(0, list_length(list));
         list_node* node = list_pop(list, index);
@@ -36,7 +38,7 @@ void test_pop(linked_list* list, int num){
     }
 }
 
-void test_find_val(linked_list* list, int num){
+void test_find_val(Do_linked_list * list, int num){
     list_print(list);
     std::cout << std::endl;
     for (int i = 0; i < num; ++i) {
@@ -52,7 +54,7 @@ void test_find_val(linked_list* list, int num){
     }
 }
 
-void test_delete(linked_list* list){
+void test_delete(Do_linked_list * list){
     std::cout << "before: ";
     list_print(list);
     std::cout << std::endl;
@@ -63,7 +65,7 @@ void test_delete(linked_list* list){
 }
 
 int main(){
-    linked_list* list = list_init();
+    Do_linked_list * list = list_init();
     test_insert(list, 20, 1);
     std::cout << "-----------------------" << std::endl;
     test_find_val(list, 20);
