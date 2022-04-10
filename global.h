@@ -4,6 +4,12 @@
 #define C_C___GLOBAL_H
 
 #endif //C_C___GLOBAL_H
+void error(const char* err_msg, int err_code);
+
+#define ILLEGAL_INDEX error("Illegal index", 100)
+#define INSERT_ERROR error("Can not insert element", 101)
+#define POP_ERROR error("Can not pop element", 102)
+#define ILLEGAL_SUFFIX error("Illegal suffix", 103)
 
 
 // 定义异常显示

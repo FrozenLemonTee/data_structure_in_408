@@ -120,7 +120,7 @@ void list_add_head(linked_list* list, list_node* node){
 // 按索引查找节点
 list_node* list_find_by_index(linked_list* list, int index){
     if (!list_check_index(list, index)){
-        error("Wrong index", 103);
+        ILLEGAL_INDEX;
     }
     list_node* node_pointer = &list->body_pointer;
     for (int i = 0; i <= index; ++i) {
@@ -147,7 +147,7 @@ void list_insert(linked_list* list, int index, list_node* node){
         list_add_head(list, node);
         return;
     } else if (!list_check_index(list, index)){
-        error("Wrong index", 103);
+        ILLEGAL_INDEX;
     }
     list_node* pre_pointer = list_find_by_index(list, index - 1);
     list_node* pro_pointer = pre_pointer->next_node;
@@ -159,7 +159,7 @@ void list_insert(linked_list* list, int index, list_node* node){
 // 弹出头部的节点并返回
 list_node* list_pop(linked_list* list){
     if (list_check_empty(list)){
-        error("Can not pop node from a empty list", 104);
+        POP_ERROR;
     }
     list_node* node = list->head_node;
     node_set_next(&list->body_pointer, node->next_node);
@@ -172,9 +172,9 @@ list_node* list_pop(linked_list* list){
 // 弹出链表中的节点并返回
 list_node* list_pop(linked_list* list, int index){
     if (list_check_empty(list)){
-        error("Can not pop node from a empty list", 104);
+        POP_ERROR;
     } else if (!list_check_index(list, index)){
-        error("Wrong index", 103);
+        ILLEGAL_INDEX;
     }
     if (index == 0){
         return list_pop(list);
