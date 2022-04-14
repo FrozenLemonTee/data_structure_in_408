@@ -43,7 +43,7 @@ typedef struct linked_stack{
     int cnt;
 }linked_stack;
 
-// 单链表初始化
+// 链栈初始化
 linked_stack* stack_init(){
     linked_stack* list = (linked_stack*)malloc(sizeof(linked_stack));
     list->body_pointer = *node_init(INT_MAX);
@@ -51,13 +51,13 @@ linked_stack* stack_init(){
     return list;
 }
 
-// 返回链表长度
+// 返回链栈长度
 int stack_length(linked_stack* stack){
     return stack->cnt;
 }
 
 // 检查链栈是否为空
-bool stack_check_empty(linked_stack* stack){
+bool stack_check_empty(linked_stack *stack){
     return !stack_length(stack);
 }
 

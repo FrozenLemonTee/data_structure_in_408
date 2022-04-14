@@ -22,3 +22,8 @@ void error(const char* err_msg, int err_code){
 int rand_range(int range_a, int range_b){
     return range_b ? range_a + rand() % range_b : range_a;
 }
+
+// 随机生成布尔值
+bool rand_bool(){
+    return rand_range(0, 2);
+}
