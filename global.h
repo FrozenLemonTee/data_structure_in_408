@@ -4,6 +4,7 @@
 #define C_C___GLOBAL_H
 
 #endif //C_C___GLOBAL_H
+#define T template<typename TYPE>
 void error(const char* err_msg, int err_code);
 
 #define ILLEGAL_INDEX error("Illegal index", 100)
