@@ -23,12 +23,12 @@ T int matrix_get_size(symmetric_matrix* matrix){
 }
 
 // 对称矩阵初始化
-T symmetric_matrix* matrix_init(int size){
+T symmetric_matrix* matrix_init(int len){
     symmetric_matrix* matrix = (symmetric_matrix*)malloc(sizeof(symmetric_matrix));
-    matrix->side_len = size;
-    matrix->matrix_body = (TYPE*)malloc(sizeof(TYPE)*(matrix->side_len * matrix->side_len));
+    matrix->side_len = len;
+    matrix->matrix_body = (TYPE*)malloc(sizeof(TYPE)*(matrix_get_size(matrix)));
     for (int i = 0; i < matrix_get_size(matrix); ++i) {
-        matrix->matrix_body[i] = NULL;
+        matrix->matrix_body[i] = (TYPE)NULL;
     }
     return matrix;
 }
