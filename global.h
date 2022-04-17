@@ -28,3 +28,10 @@ int rand_range(int range_a, int range_b){
 bool rand_bool(){
     return rand_range(0, 2);
 }
+
+// 交换两个变量的值
+T void swap(TYPE &a, TYPE &b){
+    TYPE tmp = a;
+    a = b;
+    b = tmp;
+}

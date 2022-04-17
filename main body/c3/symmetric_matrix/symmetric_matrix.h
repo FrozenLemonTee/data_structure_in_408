@@ -36,9 +36,7 @@ T symmetric_matrix* matrix_init(int len){
 // 获取矩阵的元素
 T TYPE matrix_get_val(symmetric_matrix* matrix, int i, int j){
     if (j > i){
-        int tmp = i;
-        i = j;
-        j = tmp;
+        swap(i, j);
     }
     return matrix->matrix_body[(1 + i) * i / 2 + j];
 }
@@ -46,9 +44,7 @@ T TYPE matrix_get_val(symmetric_matrix* matrix, int i, int j){
 // 将元素插入到矩阵中
 T void matrix_set_val(symmetric_matrix* matrix, int i, int j, TYPE val){
     if (j > i){
-        int tmp = i;
-        i = j;
-        j = tmp;
+        swap(i, j);
     }
     matrix->matrix_body[(1 + i) * i / 2 + j] = val;
 }
