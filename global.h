@@ -14,11 +14,32 @@ void error(const char* err_msg, int err_code);
 #define ILLEGAL_SUFFIX error("Illegal suffix", 103)
 #define TYPE_ERROR error("wrong usage of the element", 104)
 
+// 打印分隔线
+void print_separate(){
+    std::cout << "-----------------------" << std::endl;
+}
 
 // 定义异常显示
 void error(const char* err_msg, int err_code){
     std::cerr << std::endl << err_msg << std::endl;
     exit(err_code);
+}
+
+// 返回两者中的较大值
+T TYPE max(TYPE a, TYPE b){
+    return a > b ? a : b;
+}
+
+// 返回两者中的较小值
+T TYPE min(TYPE a, TYPE b){
+    return a < b ? a : b;
+}
+
+// 交换两个变量的值
+T void swap(TYPE &a, TYPE &b){
+    TYPE tmp = a;
+    a = b;
+    b = tmp;
 }
 
 // 生成指定范围内的随机整数
@@ -44,19 +65,10 @@ char rand_alpha(){
     return rand_range('A', 'Z' - 'A');
 }
 
-// 交换两个变量的值
-T void swap(TYPE &a, TYPE &b){
-    TYPE tmp = a;
-    a = b;
-    b = tmp;
-}
-
-// 返回两者中的较小值
-T TYPE min(TYPE a, TYPE b){
-    return a < b ? a : b;
-}
-
-// 返回两者中的较大值
-T TYPE max(TYPE a, TYPE b){
-    return a > b ? a : b;
+// 生成两个字母间的任意字母
+char rand_alpha(char a, char b){
+    if (islower(a)){
+        return rand_range(tolower(min(a, b)), (abs(a - b)) % 26 + 1);
+    }
+    return rand_range(toupper(min(a, b)), (abs(a - b)) % 26 + 1);
 }

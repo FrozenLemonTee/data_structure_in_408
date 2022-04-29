@@ -7,6 +7,7 @@ struct string;
 ::string* str_init(int size, char c);
 ::string* str_init(::string* str);
 ::string* str_init(::string* str, int start, int len);
+::string* str_init(const char* const_str);
 int str_length(::string* str);
 bool str_order_check(::string* str, int order);
 
@@ -91,6 +92,19 @@ void str_set(::string* str, int order, char c){
 // 默认传入整个字符串的构造方法
 ::string* str_init(::string* str){
     return str_init(str, 1, str_length(str));
+}
+
+// 传入一个常量字符串的字符串构造方法
+::string* str_init(const char* const_str){
+    int cnt = 0;
+    while (const_str[cnt] != '\0'){
+        cnt += 1;
+    }
+    ::string* n_str = str_init(cnt);
+    for (int i = 0; i < cnt; ++i) {
+        n_str->ch_pointer[i + 1] = const_str[i];
+    }
+    return n_str;
 }
 
 // 将两个字符串拼接成新的字符串
