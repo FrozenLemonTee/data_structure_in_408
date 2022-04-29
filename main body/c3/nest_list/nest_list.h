@@ -75,7 +75,7 @@ T int node_depth(::node<TYPE>* node){
     while (pointer){
         if (node_type_check(pointer, 1)){
             int cur_depth = node_depth(pointer) + 1;
-            depth = cur_depth > depth ? cur_depth : depth;
+            depth = max(cur_depth, depth);
         }
         pointer = pointer->next;
     }

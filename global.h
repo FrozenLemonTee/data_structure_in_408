@@ -22,8 +22,8 @@ void error(const char* err_msg, int err_code){
 }
 
 // 生成指定范围内的随机整数
-int rand_range(int range_a, int range_b){
-    return range_b ? range_a + rand() % range_b : range_a;
+int rand_range(int start, int range){
+    return range ? start + rand() % range : start;
 }
 
 // 随机生成布尔值
@@ -32,13 +32,16 @@ bool rand_bool(){
 }
 
 // 生成0到1之间的浮点数
-double rand_float(){
+double rand_double(){
     return (double)(rand() % 101) / 101;
 }
 
-// 返回0至1之间的浮点数
-double standard_float(double f){
-    return fabs(f - int(f));
+// 生成任意字母
+char rand_alpha(){
+    if (rand_bool()){
+        return rand_range('a', 'z' - 'a');
+    }
+    return rand_range('A', 'Z' - 'A');
 }
 
 // 交换两个变量的值
@@ -46,4 +49,14 @@ T void swap(TYPE &a, TYPE &b){
     TYPE tmp = a;
     a = b;
     b = tmp;
+}
+
+// 返回两者中的较小值
+T TYPE min(TYPE a, TYPE b){
+    return a < b ? a : b;
+}
+
+// 返回两者中的较大值
+T TYPE max(TYPE a, TYPE b){
+    return a > b ? a : b;
 }

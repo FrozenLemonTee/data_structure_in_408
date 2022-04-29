@@ -10,7 +10,7 @@ node<int>* recur_list_build(int* init){
     init[1] -= 1;
     node<int>* res = node_init<int>();
     while (init[0] > 0){
-        float f = rand_float();
+        float f = rand_double();
         if (f > SEED || init[1] == 0){
             node_add_end(res, node_init(rand_range(0, init[0])));
         } else{
