@@ -7,12 +7,62 @@
 #endif //C_C___GLOBAL_H
 #define T template<typename TYPE>
 void error(const char* err_msg, int err_code);
+T void swap(TYPE &a, TYPE &b);
 
 #define ILLEGAL_INDEX error("Illegal index", 100)
 #define INSERT_ERROR error("Can not insert element", 101)
 #define POP_ERROR error("Can not pop element", 102)
 #define ILLEGAL_SUFFIX error("Illegal suffix", 103)
 #define TYPE_ERROR error("wrong usage of the element", 104)
+
+// 数组定义
+T struct array{
+private:
+    TYPE* body;
+    int cnt;
+
+    bool check_index(int index){
+        return index >= 0 && index < this->cnt;
+    }
+public:
+    array(int size){
+        this->cnt = size;
+        this->body = (TYPE*)malloc(sizeof(TYPE) * size);
+    }
+
+    int size(){
+        return this->cnt;
+    }
+
+    TYPE get(int index){
+        if (!this->check_index(index)){
+            ILLEGAL_INDEX;
+        }
+        return this->body[index];
+    }
+
+    void set(int index, TYPE elem){
+        if (!this->check_index(index)){
+            ILLEGAL_INDEX;
+        }
+        this->body[index] = elem;
+    }
+
+    void exchange(int index1, int index2){
+        if (!this->check_index(index1) || !this->check_index(index2)){
+            ILLEGAL_INDEX;
+        }
+        swap(this->body[index1], this->body[index2]);
+    }
+
+    void print(){
+        std::cout << "[";
+        for (int i = 0; i < this->size(); ++i) {
+            std::cout << this->body[i] << ", ";
+        }
+        std::cout << "]";
+    }
+};
 
 // 打印分隔线
 void print_separate(){

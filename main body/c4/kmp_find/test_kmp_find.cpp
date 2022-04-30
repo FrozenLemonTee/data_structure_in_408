@@ -38,7 +38,7 @@ void test_find(::string** str_arr, int num, int count){
         std::cout << "ptn: ";
         str_print(ptn);
         std::cout << std::endl;
-        std::cout << "pm arr: ";
+        std::cout << "pm body: ";
         print_pm(ptn, kmp_pm(ptn));
         std::cout << std::endl;
         std::cout << "find: " << kmp_find(src, ptn) << std::endl;
