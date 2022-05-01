@@ -29,5 +29,15 @@ void test_sort(func_sort func, int size, int key){
 
 int main(){
     test_sort(bubble_sort, 20, 0);
+    test_sort(bubble_sort, 20, 1);
+    print_separate();
+    test_sort(select_sort, 20, 0);
+    test_sort(select_sort, 20, 1);
+    print_separate();
+    test_sort(insert_sort, 30, 0);
+    test_sort(insert_sort, 30, 1);
+    print_separate();
+    test_sort(shell_sort, 40, 1);
+    test_sort(shell_sort, 40, 0);
     return 0;
 }
