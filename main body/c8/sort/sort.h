@@ -62,3 +62,46 @@ T void shell_sort(array<TYPE> arr, int key){
         distance_insert(arr, i, key);
     }
 }
+
+// 快速排序区间分块
+T int partition(array<TYPE> arr, int l_bound, int r_bound, int key){
+    int ori = rand_range(l_bound, r_bound - l_bound);
+    TYPE tmp = arr.get(ori);
+    arr.exchange(l_bound, ori);
+    int left = l_bound;
+    int right = r_bound;
+    int order = -1;
+    while (left < right){
+        if (order == -1){
+            if (higher_priority(arr.get(right), tmp, key)){
+                arr.exchange(left, right);
+                order = 1;
+            } else{
+                right -= 1;
+            }
+        } else{
+            if (higher_priority(tmp, arr.get(left), key)){
+                arr.exchange(left, right);
+                order = -1;
+            } else{
+                left += 1;
+            }
+        }
+    }
+    arr.set(left, tmp);
+    return left;
+}
+
+// 快速排序主程序
+T void _quick_sort(array<TYPE> arr, int l_bound, int r_bound, int key){
+    if (l_bound < r_bound){
+        int mid = partition(arr, l_bound, r_bound, key);
+        _quick_sort(arr, l_bound, mid - 1, key);
+        _quick_sort(arr, mid + 1, r_bound, key);
+    }
+}
+
+// 快速排序
+T void quick_sort(array<TYPE> arr, int key){
+    _quick_sort(arr, 0, arr.size() - 1, key);
+}

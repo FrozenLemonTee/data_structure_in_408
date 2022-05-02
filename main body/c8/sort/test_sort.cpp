@@ -39,5 +39,8 @@ int main(){
     print_separate();
     test_sort(shell_sort, 40, 1);
     test_sort(shell_sort, 40, 0);
+    print_separate();
+    test_sort(quick_sort, 60, 1);
+    test_sort(quick_sort, 60, 0);
     return 0;
 }
