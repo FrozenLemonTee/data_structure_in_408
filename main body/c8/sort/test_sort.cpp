@@ -42,5 +42,11 @@ int main(){
     print_separate();
     test_sort(quick_sort, 60, 1);
     test_sort(quick_sort, 60, 0);
+    print_separate();
+    test_sort(merge_sort, 30, 0);
+    test_sort(merge_sort, 30, 1);
+    print_separate();
+    test_sort(heap_sort, 20, 1);
+    test_sort(heap_sort, 20, 0);
     return 0;
 }
