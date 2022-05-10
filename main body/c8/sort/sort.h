@@ -6,7 +6,7 @@
 #define C_C___SORT_H
 
 #endif //C_C___SORT_H
-#include "global.h"
+#include <main body/c2/linked_list/linked_list.h>
 
 // key为0时为升序模式，为1时为降序模式
 T bool higher_priority(TYPE a, TYPE b, int key){
@@ -177,5 +177,33 @@ T void heap_sort(array<TYPE> arr, int key){
     for (int i = arr.size(); i > 1; --i) {
         arr.exchange(0, i - 1);
         down(arr, 1, i - 1, !key);
+    }
+}
+
+// 建桶操作
+array<linked_list<char*>*> buckets_build(){
+    array<linked_list<char*>*> buckets = array<linked_list<char*>*>(10);
+    for (int i = 0; i < buckets.size(); ++i) {
+        buckets.set(i, list_init<char*>());
+    }
+    return buckets;
+}
+
+// 基数排序
+void radix_sort(array<char*> arr, int key){
+    int len = char_length(arr.get(0));
+    array<linked_list<char*>*> buckets = buckets_build();
+    for (int i = 0; i < len; ++i) {
+        for (int j = 0; j < arr.size(); ++j) {
+            int index = key ? 9 - (arr.get(j)[len - 1 - i] - '0') : arr.get(j)[len - 1 - i] - '0';
+            list_insert(buckets.get(index), node_init(arr.get(j)));
+        }
+        int cnt = 0;
+        for (int k = 0; k < buckets.size(); ++k) {
+            while (list_length(buckets.get(k))){
+                arr.set(cnt, list_pop(buckets.get(k))->data);
+                cnt += 1;
+            }
+        }
     }
 }

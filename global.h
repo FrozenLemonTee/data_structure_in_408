@@ -69,6 +69,15 @@ void print_separate(){
     std::cout << "-----------------------" << std::endl;
 }
 
+// 计算字符串的长度
+int char_length(const char* s){
+    int cnt = 0;
+    while (s[cnt] != '\0'){
+        cnt += 1;
+    }
+    return cnt;
+}
+
 // 定义异常显示
 void error(const char* err_msg, int err_code){
     std::cerr << std::endl << err_msg << std::endl;
@@ -121,4 +130,26 @@ char rand_alpha(char a, char b){
         return rand_range(tolower(min(a, b)), (abs(a - b)) % 26 + 1);
     }
     return rand_range(toupper(min(a, b)), (abs(a - b)) % 26 + 1);
+}
+
+// 在整型范围内生成任意位数的自然数
+int rand_num(int digits){
+    int res = 0;
+    int radix = 1;
+    for (int i = 0; i < digits; ++i) {
+        res += rand_range(0, 10) * radix;
+        radix *= 10;
+    }
+    return res;
+}
+
+// 在整型范围内生成任意位数的自然数
+char* rand_num_s(int digits){
+    int res = rand_num(digits);
+    char *c = (char*)malloc(sizeof(char*));
+    sprintf(c, "%d", res);
+    if (char_length(c) < digits){
+        sprintf(c, "0%s", c);
+    }
+    return c;
 }
