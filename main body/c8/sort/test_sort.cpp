@@ -74,7 +74,7 @@ int main(){
     test_sort(heap_sort, 20, 1);
     test_sort(heap_sort, 20, 0);
     print_separate();
-    test_sort(radix_sort, 30, 1, 2);
-    test_sort(radix_sort, 30, 0, 2);
+    test_sort(radix_sort, 30, 1, 4);
+    test_sort(radix_sort, 30, 0, 4);
     return 0;
 }

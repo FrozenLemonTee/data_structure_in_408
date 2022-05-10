@@ -1,4 +1,5 @@
 #include <iostream>
+#include "cstring"
 #include "cmath"
 
 #ifndef C_C___GLOBAL_H
@@ -145,11 +146,17 @@ int rand_num(int digits){
 
 // 在整型范围内生成任意位数的自然数
 char* rand_num_s(int digits){
-    int res = rand_num(digits);
+    int num = rand_num(digits);
     char *c = (char*)malloc(sizeof(char*));
-    sprintf(c, "%d", res);
-    if (char_length(c) < digits){
-        sprintf(c, "0%s", c);
+    sprintf(c, "%d", num);
+    int len = char_length(c);
+    char *res = (char*)malloc(sizeof(char*));
+    for (int i = 0; i < digits - len; ++i) {
+        res[i] = '0';
     }
-    return c;
+    for (int i = 0; i < len; ++i) {
+        res[digits - len + i] = c[i];
+    }
+    res[digits] = '\0';
+    return res;
 }
