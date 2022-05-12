@@ -95,11 +95,18 @@ T TYPE min(TYPE a, TYPE b){
     return a < b ? a : b;
 }
 
-// 交换两个变量的值
+// 直接交换两个变量的值
 T void swap(TYPE &a, TYPE &b){
     TYPE tmp = a;
     a = b;
     b = tmp;
+}
+
+// 根据索引交换线性结构中两元素的值
+T void swap(TYPE* p, int index1, int index2){
+    TYPE tmp = *(p + index1);
+    *(p + index1) = *(p + index2);
+    *(p + index2) = tmp;
 }
 
 // 生成指定范围内的随机整数
