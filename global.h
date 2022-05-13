@@ -15,6 +15,7 @@ T void swap(TYPE &a, TYPE &b);
 #define POP_ERROR error("Can not pop element", 102)
 #define ILLEGAL_SUFFIX error("Illegal suffix", 103)
 #define TYPE_ERROR error("wrong usage of the element", 104)
+#define NULL_PTR error("given a null pointer", 105)
 
 // 数组定义
 T struct array{
