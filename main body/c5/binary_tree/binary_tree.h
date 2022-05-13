@@ -55,10 +55,15 @@ T struct binary_tree{
     int cnt; // 二叉树总非空节点数量
 };
 
+// 检查二叉树是否为空树
+T bool tree_check_empty(binary_tree<TYPE>* tree){
+    return !tree->cnt;
+}
+
 // 二叉树的空树构造函数
 T binary_tree<TYPE>* tree_init(){
     binary_tree<TYPE>* tree = (binary_tree<TYPE>*)malloc(sizeof(binary_tree<TYPE>));
-    tree->root = node_init<TYPE>(NULL);
+    tree->root = (tree_node<TYPE>*)nullptr;
     tree->cnt = 0;
     return tree;
 }
@@ -92,4 +97,7 @@ T binary_tree<TYPE>* tree_init(array<TYPE>* arr){
             tree->cnt += 1;
         }
     }
+    free(queue_node);
+    free(queue_index);
+    return tree;
 }
