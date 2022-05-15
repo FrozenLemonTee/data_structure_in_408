@@ -26,7 +26,7 @@ T void test_push(linked_queue::linked_queue<TYPE>* queue, int num, int flag){
         if (flag){
             std::cout << "cur elem: " << val << ", ";
         }
-        queue_push(queue, linked_queue::node_init<TYPE>(val));
+        queue_push(queue, linked_queue::queue_node_init<TYPE>(val));
         if (flag){
             test_show_end(queue, 1);
             std::cout << ", cur queue: ";

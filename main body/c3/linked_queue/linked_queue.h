@@ -43,7 +43,7 @@ T void node_set_next(queue_node<TYPE> *node, queue_node<TYPE> *next) {
 
 
 // 节点初始化
-T queue_node<TYPE> *node_init(TYPE data) {
+T queue_node<TYPE> *queue_node_init(TYPE data) {
     queue_node<TYPE> *node = (queue_node<TYPE> *) malloc(sizeof(queue_node<TYPE>));
     node_set_val(node, data);
     node_set_next(node, (queue_node<TYPE> *) nullptr);
@@ -61,7 +61,8 @@ struct linked_queue {
 // 链栈初始化
 T linked_queue<TYPE> *queue_init() {
     linked_queue<TYPE> *queue = (linked_queue<TYPE> *) malloc(sizeof(linked_queue<TYPE>));
-    queue->body_pointer = *node_init<TYPE>(NULL);
+    TYPE* e = (TYPE*)malloc(sizeof(TYPE));
+    queue->body_pointer = *queue_node_init<TYPE>(*e);
     queue->tail = &queue->body_pointer;
     queue->cnt = 0;
     return queue;
