@@ -14,6 +14,7 @@ array<int> arr_create(int len){
 
 int main(){
     std::cout << node_check_null((binary_tree::tree_node<int> *) nullptr);
+    std::cout << std::endl;
     binary_tree::binary_tree<int>* tree1 = binary_tree::tree_init<int>();
     std::cout << tree_check_empty(tree1) << std::endl;
     array<int> arr = arr_create(LEN);

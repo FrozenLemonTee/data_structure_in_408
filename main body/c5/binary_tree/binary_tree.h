@@ -26,6 +26,22 @@ T bool node_check_null(tree_node<TYPE> *node) {
     return !node;
 }
 
+// 判断节点是否有左孩子或者右孩子节点
+T bool node_has_child(tree_node<TYPE>* node, bool pos){
+    if (!pos){
+        return !node_check_null(node->left);
+    }
+    return !node_check_null(node->right);
+}
+
+// 获得当前节点的左孩子或者右孩子节点
+T tree_node<TYPE>* node_get_child(tree_node<TYPE>* node, bool pos){
+    if (!pos){
+        return node->left;
+    }
+    return node->right;
+}
+
 // 打印节点
 T void node_print(tree_node<TYPE> *node) {
     if (node_check_null(node)) {
@@ -75,34 +91,34 @@ T binary_tree<TYPE> *tree_init() {
 // 二叉树构造函数
 T binary_tree<TYPE> *tree_init(array<TYPE> arr) {
     linked_queue::linked_queue<tree_node<TYPE> *> *queue_node = linked_queue::queue_init<tree_node<TYPE> *>();
-    linked_queue::linked_queue<int> *queue_index = linked_queue::queue_init<int>();
+    linked_queue::linked_queue<int> *queue_order = linked_queue::queue_init<int>();
     binary_tree<TYPE> *tree = tree_init<TYPE>();
     if (arr.size()) {
         tree->root = tree_node_init<TYPE>(arr.get(0));
         tree->cnt += 1;
         linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(tree->root));
-        linked_queue::queue_push(queue_index, linked_queue::queue_node_init<int>(0));
+        linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(1));
     }
-    while (linked_queue::queue_check_empty(queue_node)) {
+    while (!linked_queue::queue_check_empty(queue_node)) {
         tree_node<TYPE> *cur_node = linked_queue::queue_pop(queue_node)->data;
-        int cur_index = linked_queue::queue_pop(queue_index)->data;
-        if (cur_index * 2 < arr.size()) {
-            tree_node<TYPE> *left_child = tree_node_init<TYPE>(arr.get(cur_index * 2));
+        int cur_order = linked_queue::queue_pop(queue_order)->data;
+        if (cur_order * 2 <= arr.size()) {
+            tree_node<TYPE> *left_child = tree_node_init<TYPE>(arr.get(cur_order * 2 - 1));
             linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(left_child));
-            linked_queue::queue_push(queue_index, linked_queue::queue_node_init<int>(cur_index * 2));
+            linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(cur_order * 2));
             node_set_child(cur_node, LEFT_CHILD, left_child);
             tree->cnt += 1;
         }
-        if (cur_index * 2 + 1 < arr.size()) {
-            tree_node<TYPE> *right_child = tree_node_init<TYPE>(arr.get(cur_index * 2 + 1));
+        if (cur_order * 2 + 1 <= arr.size()) {
+            tree_node<TYPE> *right_child = tree_node_init<TYPE>(arr.get(cur_order * 2));
             linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(right_child));
-            linked_queue::queue_push(queue_index, linked_queue::queue_node_init<int>(cur_index * 2 + 1));
+            linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(cur_order * 2 + 1));
             node_set_child(cur_node, RIGHT_CHILD, right_child);
             tree->cnt += 1;
         }
     }
     free(queue_node);
-    free(queue_index);
+    free(queue_order);
     return tree;
 }
 
