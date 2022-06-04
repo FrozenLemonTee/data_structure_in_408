@@ -6,16 +6,20 @@
 #define C_C___GLOBAL_H
 
 #endif //C_C___GLOBAL_H
-#define T template<typename TYPE>
+#define T template<typename TYPE> // 定义模板参数
 void error(const char* err_msg, int err_code);
 T void swap(TYPE &a, TYPE &b);
 
-#define ILLEGAL_INDEX error("Illegal index", 100)
-#define INSERT_ERROR error("Can not insert element", 101)
-#define POP_ERROR error("Can not pop element", 102)
-#define ILLEGAL_SUFFIX error("Illegal suffix", 103)
-#define TYPE_ERROR error("wrong usage of the element", 104)
-#define NULL_PTR error("given a null pointer", 105)
+// 常用异常定义
+
+#define ILLEGAL_INDEX error("Illegal index", 100) // 非法索引异常
+#define INSERT_ERROR error("Can not insert element", 101) // 元素插入异常
+#define POP_ERROR error("Can not pop element", 102) // 元素弹出异常
+#define ILLEGAL_SUFFIX error("Illegal suffix", 103) // 非法下标（编号）异常
+#define TYPE_ERROR error("wrong usage of the element", 104) // 类型异常
+#define NULL_PTR error("given a null pointer", 105) // 空指针异常
+#define GRAPH_SIDE_ERROR error("wrong setting in graph", 106) // 图边设置异常
+
 
 // 数组定义
 T struct array{
@@ -136,9 +140,9 @@ char rand_alpha(){
 // 生成两个字母间的任意字母
 char rand_alpha(char a, char b){
     if (islower(a)){
-        return rand_range(tolower(min(a, b)), (abs(a - b)) % 26 + 1);
+        return rand_range(tolower(min(a, b)), (abs(a - tolower(b))) % 26 + 1);
     }
-    return rand_range(toupper(min(a, b)), (abs(a - b)) % 26 + 1);
+    return rand_range(toupper(min(a, b)), (abs(a - toupper(b))) % 26 + 1);
 }
 
 // 在整型范围内生成任意位数的自然数
