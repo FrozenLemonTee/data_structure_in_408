@@ -22,32 +22,31 @@ T struct adjacency_graph{
 };
 
 // 邻接矩阵图初始化
-T adjacency_graph<TYPE>* graph_init(bool type, array<TYPE>* nodes){
+T adjacency_graph<TYPE>* graph_init(bool type, array<TYPE> nodes){
     adjacency_graph<TYPE>* graph = (adjacency_graph<TYPE>*)malloc(sizeof(adjacency_graph<TYPE>));
     graph->directed = type;
-    graph->nodes_cnt = nodes->size();
+    graph->nodes_cnt = nodes.size();
     graph->sides_cnt = 0;
     graph->nodes = (TYPE*)malloc(sizeof(TYPE) * graph->nodes_cnt);
-    for (int i = 0; i < nodes->size(); ++i) {
-        graph->nodes[i] = nodes->get(i);
+    for (int i = 0; i < nodes.size(); ++i) {
+        graph->nodes[i] = nodes.get(i);
     }
-    int init = type ? INT_MAX : 0;
     graph->sides = (int**)malloc(sizeof(int*) * graph->nodes_cnt);
     for (int i = 0; i < graph->nodes_cnt; ++i) {
         graph->sides[i] = (int*)malloc(sizeof(int) * graph->nodes_cnt);
         for (int j = 0; j < graph->nodes_cnt; ++j) {
-            graph->sides[i][j] = init;
+            graph->sides[i][j] = INT_MAX;
         }
     }
     return graph;
 }
 
 // 检查边的设置是否合法
-T bool graph_side_check(adjacency_graph<TYPE>* graph, int node1, int node2, int weight){
+T bool graph_side_check(adjacency_graph<TYPE>* graph, int node1, int node2){
     if (node1 == node2 || node1 >= graph->nodes_cnt || node2 >= graph->nodes_cnt){
         return false;
     }
-    return graph->directed || (weight == 0 || weight == 1);
+    return true;
 }
 
 // 获取图的类型
@@ -57,22 +56,21 @@ T bool graph_get_type(adjacency_graph<TYPE>* graph){
 
 // 设置边的权值
 T void graph_set_side(adjacency_graph<TYPE>* graph, int node1, int node2, int weight){
-    if (graph_side_check(graph, node1, node2, weight)){
+    if (!graph_side_check(graph, node1, node2)){
         GRAPH_SIDE_ERROR;
     }
     graph->sides[node1][node2] = weight;
     if (graph_get_type(graph) == UNDIRECTED_GRAPH){
         graph->sides[node2][node1] = weight;
     }
-    int init = graph_get_type(graph) ? INT_MAX : 0;
-    if (graph->sides[node1][node2] == init && weight != init){
+    if (graph->sides[node1][node2] == INT_MAX && weight != INT_MAX){
         graph->sides_cnt += 1;
-    } else if (graph->sides[node1][node2] != init && weight == init){
+    } else if (graph->sides[node1][node2] != INT_MAX && weight == INT_MAX){
         graph->sides_cnt -= 1;
     }
 }
 
-// 获取某节点的度
+// 获取某节点的出度与入度
 T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
     if (node >= graph->nodes_cnt){
         ILLEGAL_INDEX;
@@ -80,15 +78,14 @@ T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
     array<int> res = array<int>(2);
     res.set(0, 0);
     res.set(1, 0);
-    int init = graph_get_type(graph) ? INT_MAX : 0;
     for (int i = 0; i < graph->nodes_cnt; ++i) {
-        if (graph->sides[node][i] != init){
+        if (graph->sides[node][i] != INT_MAX){
             res.set(0, res.get(0) + 1);
         }
     }
     if (graph_get_type(graph) == DIRECTED_GRAPH){
         for (int i = 0; i < graph->nodes_cnt; ++i) {
-            if (graph->sides[i][node] != init){
+            if (graph->sides[i][node] != INT_MAX){
                 res.set(1, res.get(1) + 1);
             }
         }
@@ -100,11 +97,10 @@ T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
 
 // 打印图
 T void graph_print(adjacency_graph<TYPE>* graph){
-    int init = graph_get_type(graph) ? INT_MAX : 0;
     for (int i = 0; i < graph->nodes_cnt; ++i) {
         std::cout << "(" << graph->nodes[i] << ", " << "#" << i << "): ";
         for (int j = 0; j < graph->nodes_cnt; ++j) {
-            if (graph->sides[i][j] != init){
+            if (graph->sides[i][j] != INT_MAX){
                 std::cout << graph->sides[i][j] << "(#" << j << "), ";
             }
         }
