@@ -1,4 +1,5 @@
 #include <iostream>
+#include <initializer_list>
 #include "cstring"
 #include "cmath"
 
@@ -34,6 +35,16 @@ public:
     array(int size){
         this->cnt = size;
         this->body = (TYPE*)malloc(sizeof(TYPE) * size);
+    }
+
+    array(std::initializer_list<TYPE> list){
+        this->cnt = list.size();
+        this->body = (TYPE*)malloc(sizeof(TYPE) * list.size());
+        int i = 0;
+        for (TYPE e : list){
+            this->body[i] = e;
+            i += 1;
+        }
     }
 
     int size(){

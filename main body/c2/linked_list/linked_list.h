@@ -78,7 +78,7 @@ T bool list_check_index(linked_list<TYPE>* list, int index){
 // 单链表初始化
 T linked_list<TYPE>* list_init(){
     linked_list<TYPE>* list = (linked_list<TYPE>*)malloc(sizeof(linked_list<TYPE>));
-    list->body_pointer = *node_init<TYPE>(nullptr);
+    list->body_pointer = *node_init<TYPE>(*(TYPE*)malloc(sizeof(TYPE)));
     list->head_node = (list_node<TYPE>*)nullptr;
     list->tail_node = (list_node<TYPE>*)nullptr;
     list->cnt = 0;

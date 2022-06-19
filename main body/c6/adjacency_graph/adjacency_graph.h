@@ -59,14 +59,14 @@ T void graph_set_side(adjacency_graph<TYPE>* graph, int node1, int node2, int we
     if (!graph_side_check(graph, node1, node2)){
         GRAPH_SIDE_ERROR;
     }
-    graph->sides[node1][node2] = weight;
-    if (graph_get_type(graph) == UNDIRECTED_GRAPH){
-        graph->sides[node2][node1] = weight;
-    }
     if (graph->sides[node1][node2] == INT_MAX && weight != INT_MAX){
         graph->sides_cnt += 1;
     } else if (graph->sides[node1][node2] != INT_MAX && weight == INT_MAX){
         graph->sides_cnt -= 1;
+    }
+    graph->sides[node1][node2] = weight;
+    if (graph_get_type(graph) == UNDIRECTED_GRAPH){
+        graph->sides[node2][node1] = weight;
     }
 }
 
@@ -75,9 +75,7 @@ T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
     if (node >= graph->nodes_cnt){
         ILLEGAL_INDEX;
     }
-    array<int> res = array<int>(2);
-    res.set(0, 0);
-    res.set(1, 0);
+    array<int> res = array<int>({0, 0});
     for (int i = 0; i < graph->nodes_cnt; ++i) {
         if (graph->sides[node][i] != INT_MAX){
             res.set(0, res.get(0) + 1);
@@ -97,6 +95,9 @@ T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
 
 // 打印图
 T void graph_print(adjacency_graph<TYPE>* graph){
+    const char* type = graph_get_type(graph) ? "DIRECTED_GRAPH" : "UNDIRECTED_GRAPH";
+    std::cout << "(" << type << " adjacency_graph #" << graph << ", node: " << graph->nodes_cnt
+              << ", sides: " << graph->sides_cnt << ")" << std::endl;
     for (int i = 0; i < graph->nodes_cnt; ++i) {
         std::cout << "(" << graph->nodes[i] << ", " << "#" << i << "): ";
         for (int j = 0; j < graph->nodes_cnt; ++j) {
