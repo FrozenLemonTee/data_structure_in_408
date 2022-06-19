@@ -16,7 +16,7 @@ void test_insert(linked_list<int>* list, int num, int flag){
             node_print(node);
             std::cout << ", ";
         }
-        list_insert(list, index, node);
+        list_insert_(list, index, node);
         if (flag){
             list_print(list);
             std::cout << std::endl;
@@ -27,7 +27,7 @@ void test_insert(linked_list<int>* list, int num, int flag){
 void test_pop(linked_list<int>* list, int num){
     for (int i = 0; i < num; ++i) {
         int index = rand_range(0, list_length(list));
-        list_node<int>* node = list_pop(list, index);
+        list_node<int>* node = list_pop_(list, index);
         std::cout << "cur index: " << index << ", " << "cur node: ";
         node_print(node);
         std::cout << " ";

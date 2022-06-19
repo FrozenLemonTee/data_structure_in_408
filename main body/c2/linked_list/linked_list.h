@@ -94,7 +94,7 @@ T void list_body_create(linked_list<TYPE>* list, list_node<TYPE>* node){
 }
 
 // 在链表尾部插入节点
-T void list_insert(linked_list<TYPE>* list, list_node<TYPE>* node){
+T void list_insert_(linked_list<TYPE>* list, list_node<TYPE>* node){
     if (list_check_empty(list)){
         list_body_create(list, node);
         return;
@@ -102,6 +102,11 @@ T void list_insert(linked_list<TYPE>* list, list_node<TYPE>* node){
     node_set_next(list->tail_node, node);
     list->tail_node = node;
     list->cnt += 1;
+}
+
+// 尾部插入元素（自动装箱）
+T void list_insert(linked_list<TYPE>* list, TYPE elem){
+    list_insert_(list, node_init(elem));
 }
 
 // 在链表头部插入节点
@@ -117,7 +122,7 @@ T void list_add_head(linked_list<TYPE>* list, list_node<TYPE>* node){
 }
 
 // 按索引查找节点
-T list_node<TYPE>* list_find_by_index(linked_list<TYPE>* list, int index){
+T list_node<TYPE>* list_find_by_index_(linked_list<TYPE>* list, int index){
     if (!list_check_index(list, index)){
         ILLEGAL_INDEX;
     }
@@ -126,6 +131,11 @@ T list_node<TYPE>* list_find_by_index(linked_list<TYPE>* list, int index){
         node_pointer = node_pointer->next_node;
     }
     return node_pointer;
+}
+
+// 按索引查找元素（自动拆箱）
+T TYPE list_find_by_index(linked_list<TYPE>* list, int index){
+    return list_find_by_index_(list, index)->data;
 }
 
 // 按值查找节点
@@ -138,9 +148,9 @@ T list_node<TYPE>* list_find_by_val(linked_list<TYPE>* list, TYPE val){
 }
 
 // 将节点插入链表中
-T void list_insert(linked_list<TYPE>* list, int index, list_node<TYPE>* node){
+T void list_insert_(linked_list<TYPE>* list, int index, list_node<TYPE>* node){
     if (index == list_length(list)){
-        list_insert(list, node);
+        list_insert_(list, node);
         return;
     } else if (index == 0){
         list_add_head(list, node);
@@ -148,15 +158,20 @@ T void list_insert(linked_list<TYPE>* list, int index, list_node<TYPE>* node){
     } else if (!list_check_index(list, index)){
         ILLEGAL_INDEX;
     }
-    list_node<TYPE>* pre_pointer = list_find_by_index(list, index - 1);
+    list_node<TYPE>* pre_pointer = list_find_by_index_(list, index - 1);
     list_node<TYPE>* pro_pointer = pre_pointer->next_node;
     node_set_next(pre_pointer, node);
     node_set_next(node, pro_pointer);
     list->cnt += 1;
 }
 
+// 插入元素（自动装箱）
+T void list_insert(linked_list<TYPE>* list, int index, TYPE elem){
+    list_insert_(list, index, node_init(elem));
+}
+
 // 弹出头部的节点并返回
-T list_node<TYPE>* list_pop(linked_list<TYPE>* list){
+T list_node<TYPE>* list_pop_(linked_list<TYPE>* list){
     if (list_check_empty(list)){
         POP_ERROR;
     }
@@ -168,23 +183,33 @@ T list_node<TYPE>* list_pop(linked_list<TYPE>* list){
     return node;
 }
 
+// 弹出头部元素（自动拆箱）
+T TYPE list_pop(linked_list<TYPE>* list){
+    return list_pop_(list)->data;
+}
+
 // 弹出链表中的节点并返回
-T list_node<TYPE>* list_pop(linked_list<TYPE>* list, int index){
+T list_node<TYPE>* list_pop_(linked_list<TYPE>* list, int index){
     if (list_check_empty(list)){
         POP_ERROR;
     } else if (!list_check_index(list, index)){
         ILLEGAL_INDEX;
     }
     if (index == 0){
-        return list_pop(list);
+        return list_pop_(list);
     }
-    list_node<TYPE>* pre_pointer = list_find_by_index(list, index - 1);
+    list_node<TYPE>* pre_pointer = list_find_by_index_(list, index - 1);
     list_node<TYPE>* node = pre_pointer->next_node;
     list_node<TYPE>* pro_pointer = node->next_node;
     node_set_next(pre_pointer, pro_pointer);
     node_set_next(node, (list_node<TYPE>*)nullptr);
     list->cnt -= 1;
     return node;
+}
+
+// 弹出元素（自动拆箱）
+T TYPE list_pop(linked_list<TYPE>* list, int index){
+    return list_pop_(list, index)->data;
 }
 
 // 清空链表的存储空间

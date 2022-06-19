@@ -42,19 +42,17 @@ void test_get_degree(linked_graph<int>* graph, int num){
 
 void test_delete_side(linked_graph<int>* graph, int num){
     for (int i = 0; i < num; ++i) {
+        if (!graph->sides_cnt){
+            std::cout << "No side to be deleted" << std::endl;
+            continue;
+        }
         int node1 = rand_range(0, graph->nodes_cnt);
-        int node2 = rand_range(0, graph->nodes_cnt);
-        while (node2 == node1){
-            node2 = rand_range(0, graph->nodes_cnt);
+        while (!list_length(graph->sides[node1])){
+            node1 = rand_range(0, graph->nodes_cnt);
         }
+        int node2 = list_find_by_index(graph->sides[node1], rand_range(0, list_length(graph->sides[node1]))).get(0);
         int weight = graph_delete_side(graph, node1, node2);
-        std::cout << "delete: " << node1 << "---" << node2 << ": ";
-        if (weight == INT_MAX){
-            std::cout << "not exist";
-        } else{
-            std::cout << weight;
-        }
-        std::cout << std::endl;
+        std::cout << "delete: " << node1 << "---" << node2 << ": " << weight << ", sides count: " << graph->sides_cnt << std::endl;
     }
 }
 

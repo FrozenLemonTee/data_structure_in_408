@@ -95,7 +95,7 @@ T array<int> graph_get_degree(adjacency_graph<TYPE>* graph, int node){
 
 // 打印图
 T void graph_print(adjacency_graph<TYPE>* graph){
-    const char* type = graph_get_type(graph) ? "DIRECTED_GRAPH" : "UNDIRECTED_GRAPH";
+    const char* type = graph_get_type(graph) ? "DIRECTED" : "UNDIRECTED";
     std::cout << "(" << type << " adjacency_graph #" << graph << ", node: " << graph->nodes_cnt
               << ", sides: " << graph->sides_cnt << ")" << std::endl;
     for (int i = 0; i < graph->nodes_cnt; ++i) {

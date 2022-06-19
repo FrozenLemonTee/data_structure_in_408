@@ -196,12 +196,12 @@ void radix_sort(array<char*> arr, int key){
     for (int i = 0; i < len; ++i) {
         for (int j = 0; j < arr.size(); ++j) {
             int index = key ? 9 - (arr.get(j)[len - 1 - i] - '0') : arr.get(j)[len - 1 - i] - '0';
-            list_insert(buckets.get(index), node_init(arr.get(j)));
+            list_insert(buckets.get(index), arr.get(j));
         }
         int cnt = 0;
         for (int k = 0; k < buckets.size(); ++k) {
             while (list_length(buckets.get(k))){
-                arr.set(cnt, list_pop(buckets.get(k))->data);
+                arr.set(cnt, list_pop(buckets.get(k)));
                 cnt += 1;
             }
         }

@@ -55,9 +55,9 @@ T bool graph_get_type(linked_graph<TYPE>* graph){
 T int graph_find_side(linked_graph<TYPE>* graph, int node1, int node2){
     linked_list<array<int>>* list = graph->sides[node1];
     if (!list_check_empty(list)){
-        list_node<array<int>>* pointer = list_find_by_index(list, 0);
+        int node = list_find_by_index(list, 0).get(0);
         for (int i = 0; i < list_length(list); ++i) {
-            if (pointer->data.get(0) == node2){
+            if (node == node2){
                 return i;
             }
         }
@@ -73,15 +73,15 @@ T void graph_set_side(linked_graph<TYPE>* graph, int node1, int node2, int weigh
     int pos = graph_find_side(graph, node1, node2);
     if (pos == -1){
         graph->sides_cnt += 1;
-        list_insert(graph->sides[node1], node_init(array<int>({node2, weight})));
+        list_insert(graph->sides[node1], array<int>({node2, weight}));
         if (graph_get_type(graph) == UNDIRECTED_GRAPH){
-            list_insert(graph->sides[node2], node_init(array<int>({node1, weight})));
+            list_insert(graph->sides[node2], array<int>({node1, weight}));
         }
     } else{
-        array<int> arr1 = list_find_by_index(graph->sides[node1], pos)->data;
+        array<int> arr1 = list_find_by_index(graph->sides[node1], pos);
         arr1.set(1, weight);
         if (graph_get_type(graph) == UNDIRECTED_GRAPH) {
-            array<int> arr2 = list_find_by_index(graph->sides[node2], graph_find_side(graph, node2, node1))->data;
+            array<int> arr2 = list_find_by_index(graph->sides[node2], graph_find_side(graph, node2, node1));
             arr2.set(1, weight);
         }
     }
@@ -95,17 +95,17 @@ T int graph_delete_side(linked_graph<TYPE>* graph, int node1, int node2){
     int pos = graph_find_side(graph, node1, node2);
     if (pos != -1){
         graph->sides_cnt -= 1;
-        list_pop(graph->sides[node1], pos);
+        int res = list_pop(graph->sides[node1], pos).get(1);
         if (graph_get_type(graph) == UNDIRECTED_GRAPH){
             list_pop(graph->sides[node2], graph_find_side(graph, node2, node1));
         }
-        return list_find_by_index(graph->sides[node1], pos)->data.get(1);
+        return res;
     }
     return INT_MAX;
 }
 
 // 获取某节点的出度与入度
-T  array<int> graph_get_degree(linked_graph<TYPE>* graph, int node){
+T array<int> graph_get_degree(linked_graph<TYPE>* graph, int node){
     if (node >= graph->nodes_cnt){
         ILLEGAL_INDEX;
     }
@@ -124,13 +124,13 @@ T  array<int> graph_get_degree(linked_graph<TYPE>* graph, int node){
 
 // 打印图
 T void graph_print(linked_graph<TYPE>* graph){
-    const char* type = graph_get_type(graph) ? "DIRECTED_GRAPH" : "UNDIRECTED_GRAPH";
+    const char* type = graph_get_type(graph) ? "DIRECTED" : "UNDIRECTED";
     std::cout << "(" << type << " linked_graph #" << graph << ", node: " << graph->nodes_cnt
               << ", sides: " << graph->sides_cnt << ")" << std::endl;
     for (int i = 0; i < graph->nodes_cnt; ++i) {
         std::cout << "(" << graph->nodes[i] << ", " << "#" << i << "): ";
         if (list_length(graph->sides[i])){
-            list_node<array<int>>* pointer = list_find_by_index(graph->sides[i], 0);
+            list_node<array<int>>* pointer = list_find_by_index_(graph->sides[i], 0);
             for (int j = 0; j < list_length(graph->sides[i]); ++j) {
                 array<int> cur = pointer->data;
                 std::cout << cur.get(1) << "(#" << cur.get(0) << "), ";
