@@ -96,23 +96,23 @@ T binary_tree<TYPE> *tree_init(array<TYPE> arr) {
     if (arr.size()) {
         tree->root = tree_node_init<TYPE>(arr.get(0));
         tree->cnt += 1;
-        linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(tree->root));
-        linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(1));
+        linked_queue::queue_push(queue_node, tree->root);
+        linked_queue::queue_push(queue_order, 1);
     }
     while (!linked_queue::queue_check_empty(queue_node)) {
-        tree_node<TYPE> *cur_node = linked_queue::queue_pop(queue_node)->data;
-        int cur_order = linked_queue::queue_pop(queue_order)->data;
+        tree_node<TYPE> *cur_node = linked_queue::queue_pop(queue_node);
+        int cur_order = linked_queue::queue_pop(queue_order);
         if (cur_order * 2 <= arr.size()) {
             tree_node<TYPE> *left_child = tree_node_init<TYPE>(arr.get(cur_order * 2 - 1));
-            linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(left_child));
-            linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(cur_order * 2));
+            linked_queue::queue_push(queue_node, left_child);
+            linked_queue::queue_push(queue_order, cur_order * 2);
             node_set_child(cur_node, LEFT_CHILD, left_child);
             tree->cnt += 1;
         }
         if (cur_order * 2 + 1 <= arr.size()) {
             tree_node<TYPE> *right_child = tree_node_init<TYPE>(arr.get(cur_order * 2));
-            linked_queue::queue_push(queue_node, linked_queue::queue_node_init<tree_node<TYPE> *>(right_child));
-            linked_queue::queue_push(queue_order, linked_queue::queue_node_init<int>(cur_order * 2 + 1));
+            linked_queue::queue_push(queue_node, right_child);
+            linked_queue::queue_push(queue_order, cur_order * 2 + 1);
             node_set_child(cur_node, RIGHT_CHILD, right_child);
             tree->cnt += 1;
         }

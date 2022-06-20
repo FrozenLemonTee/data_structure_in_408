@@ -110,14 +110,19 @@ T queue_node<TYPE> *queue_get_tail(linked_queue<TYPE> *queue) {
 }
 
 // 将节点入队至队尾
-T void queue_push(linked_queue<TYPE> *queue, queue_node<TYPE> *node) {
+T void queue_push_(linked_queue<TYPE> *queue, queue_node<TYPE> *node) {
     node_set_next(queue->tail, node);
     queue->tail = node;
     queue->cnt += 1;
 }
 
+// 将元素入队（自动装箱）
+T void queue_push(linked_queue<TYPE> *queue, TYPE elem){
+    queue_push_(queue, queue_node_init(elem));
+}
+
 // 将节点从队头出队并返回
-T queue_node<TYPE> *queue_pop(linked_queue<TYPE> *queue) {
+T queue_node<TYPE> *queue_pop_(linked_queue<TYPE> *queue) {
     if (queue_check_empty(queue)) {
         POP_ERROR;
     }
@@ -130,4 +135,10 @@ T queue_node<TYPE> *queue_pop(linked_queue<TYPE> *queue) {
     queue->cnt -= 1;
     return node;
 }
+
+// 将元素出队（自动拆箱）
+T TYPE queue_pop(linked_queue<TYPE> *queue){
+    return queue_pop_(queue)->data;
+}
+
 }

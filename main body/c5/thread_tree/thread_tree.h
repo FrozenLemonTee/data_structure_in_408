@@ -60,23 +60,23 @@ T struct thread_tree{
 };
 
 // 线索化主函数
-T void threaded(thread_node<TYPE>* cur, thread_node<TYPE>* root){
+T void threaded(thread_node<TYPE>* cur, thread_node<TYPE>* pre){
     if (!r_node_check_null(cur)){
-        threaded(get_pointer(cur, LEFT), root);
-        if (!r_node_check_null(get_pointer(cur, LEFT))){
-            cur->left = root;
+        threaded(get_pointer(cur, LEFT), pre);
+        if (r_node_check_null(get_pointer(cur, LEFT))){
+            cur->left = pre;
             cur->is_child_left = 0;
         }
-        if (!r_node_check_null(root) && !r_node_check_null(get_pointer(root, RIGHT))){
-            root->right = cur;
-            root->is_child_right = 0;
+        if (!r_node_check_null(pre) && !r_node_check_null(get_pointer(pre, RIGHT))){
+            pre->right = cur;
+            pre->is_child_right = 0;
         }
-        root = cur;
-        threaded(get_pointer(cur, RIGHT), root);
+        pre = cur;
+        threaded(get_pointer(cur, RIGHT), pre);
     }
 }
 
 // 线索树初始化
-T thread_node<TYPE>* r_tree_init(binary_tree::binary_tree<TYPE>* binary_tree){
+T thread_tree<TYPE>* r_tree_init(binary_tree::binary_tree<TYPE>* binary_tree){
 
 }

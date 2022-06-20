@@ -26,7 +26,7 @@ T void test_push(linked_queue::linked_queue<TYPE>* queue, int num, int flag){
         if (flag){
             std::cout << "cur elem: " << val << ", ";
         }
-        queue_push(queue, linked_queue::queue_node_init<TYPE>(val));
+        queue_push_(queue, linked_queue::queue_node_init<TYPE>(val));
         if (flag){
             test_show_end(queue, 1);
             std::cout << ", cur queue: ";
@@ -40,7 +40,7 @@ T void test_push(linked_queue::linked_queue<TYPE>* queue, int num, int flag){
 // flag为1，输出提示信息；flag为0，不输出提示信息
 T void test_pop(linked_queue::linked_queue<TYPE>* queue, int num, int flag){
     for (int i = 0; i < num; ++i) {
-        int val = node_get_val(queue_pop(queue));
+        int val = node_get_val(queue_pop_(queue));
         if (flag){
             std::cout << "cur elem: " << val << ", ";
             test_show_end(queue, 1);

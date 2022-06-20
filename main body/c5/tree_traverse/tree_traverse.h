@@ -14,17 +14,17 @@ T void tree_level_traverse(binary_tree::binary_tree<TYPE>* tree){
     std::cout << "{";
     linked_queue::linked_queue<binary_tree::tree_node<TYPE>*>* nodes = linked_queue::queue_init<binary_tree::tree_node<TYPE>*>();
     if (!binary_tree::tree_check_empty(tree)){
-        linked_queue::queue_push(nodes, linked_queue::queue_node_init<binary_tree::tree_node<TYPE>*>(tree->root));
+        linked_queue::queue_push(nodes, tree->root);
     }
     while (!linked_queue::queue_check_empty(nodes)){
-        binary_tree::tree_node<TYPE>* cur = linked_queue::queue_pop(nodes)->data;
+        binary_tree::tree_node<TYPE>* cur = linked_queue::queue_pop(nodes);
         binary_tree::node_print(cur);
         std::cout << ", ";
         if (binary_tree::node_has_child(cur, LEFT_CHILD)){
-            linked_queue::queue_push(nodes, linked_queue::queue_node_init<binary_tree::tree_node<TYPE>*>(binary_tree::node_get_child(cur, LEFT_CHILD)));
+            linked_queue::queue_push(nodes, binary_tree::node_get_child(cur, LEFT_CHILD));
         }
         if (binary_tree::node_has_child(cur, RIGHT_CHILD)){
-            linked_queue::queue_push(nodes, linked_queue::queue_node_init<binary_tree::tree_node<TYPE>*>(binary_tree::node_get_child(cur, RIGHT_CHILD)));
+            linked_queue::queue_push(nodes, binary_tree::node_get_child(cur, RIGHT_CHILD));
         }
     }
     std::cout << "}";
