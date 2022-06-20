@@ -60,7 +60,7 @@ T struct thread_tree{
 };
 
 // 线索化主函数
-T void threaded(thread_node<TYPE>* cur, thread_node<TYPE>* pre){
+T void threaded(thread_node<TYPE>* cur, thread_node<TYPE>*& pre){
     if (!r_node_check_null(cur)){
         threaded(get_pointer(cur, LEFT), pre);
         if (r_node_check_null(get_pointer(cur, LEFT))){
@@ -76,7 +76,44 @@ T void threaded(thread_node<TYPE>* cur, thread_node<TYPE>* pre){
     }
 }
 
-// 线索树初始化
-T thread_tree<TYPE>* r_tree_init(binary_tree::binary_tree<TYPE>* binary_tree){
+// 将二叉树拷贝成一份未线索化的线索树
+T thread_tree<TYPE>* r_tree_copy(binary_tree::binary_tree<TYPE>* b_tree){
+    thread_tree<TYPE>* tree = (thread_tree<TYPE>*)malloc(sizeof(thread_tree<TYPE>));
+    tree->root = (thread_node<TYPE>*) nullptr;
+    tree->cnt = 0;
+    linked_queue::linked_queue<binary_tree::tree_node<TYPE>*>* b_nodes = linked_queue::queue_init<binary_tree::tree_node<TYPE>*>();
+    linked_queue::linked_queue<thread_node<TYPE>*>* t_nodes = linked_queue::queue_init<thread_node<TYPE>*>();
+    if (!binary_tree::tree_check_empty(b_tree)){
+        linked_queue::queue_push(b_nodes, b_tree->root);
+        tree->root = r_node_init(b_tree->root);
+        tree->cnt = 1;
+        linked_queue::queue_push(t_nodes, tree->root);
+    }
+    while (!linked_queue::queue_check_empty(b_nodes)){
+        binary_tree::tree_node<TYPE>* cur_b = linked_queue::queue_pop(b_nodes);
+        thread_node<TYPE>* cur_t = linked_queue::queue_pop(t_nodes);
+        binary_tree::tree_node<TYPE>* left = binary_tree::node_get_child(cur_b, LEFT);
+        if (!binary_tree::node_check_null(left)){
+            linked_queue::queue_push(b_nodes, left);
+            cur_t->left = r_node_init(left);
+            linked_queue::queue_push(t_nodes, cur_t->left);
+            tree->cnt += 1;
+        }
+        binary_tree::tree_node<TYPE>* right = binary_tree::node_get_child(cur_b, RIGHT);
+        if (!binary_tree::node_check_null(right)){
+            linked_queue::queue_push(b_nodes, right);
+            cur_t->right = r_node_init(right);
+            linked_queue::queue_push(t_nodes, cur_t->right);
+            tree->cnt += 1;
+        }
+    }
+    return tree;
+}
 
+// 线索树初始化
+T thread_tree<TYPE>* r_tree_init(binary_tree::binary_tree<TYPE>* b_tree){
+    thread_tree<TYPE>* tree = r_tree_copy(b_tree);
+    thread_node<TYPE>* pre = (thread_node<TYPE>*) nullptr;
+    threaded(tree->root, pre);
+    return tree;
 }
