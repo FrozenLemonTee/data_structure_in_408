@@ -47,7 +47,8 @@ T void node_print(tree_node<TYPE> *node) {
     if (node_check_null(node)) {
         NULL_PTR;
     }
-    std::cout << "(#" << node << ", " << node->data << ")";
+    std::cout << "(#" << node << ", " << node->data <<
+    ", L: #" << node_get_child(node, LEFT_CHILD) << ", R: #" << node_get_child(node, RIGHT_CHILD) << ")";
 }
 
 // 树节点构造函数

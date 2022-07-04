@@ -7,6 +7,8 @@
 #define C_C___GLOBAL_H
 
 #endif //C_C___GLOBAL_H
+#define UNUSED __attribute__((unused)) // 取消未使用的标记
+
 #define T template<typename TYPE> // 定义模板参数
 void error(const char* err_msg, int err_code);
 T void swap(TYPE &a, TYPE &b);

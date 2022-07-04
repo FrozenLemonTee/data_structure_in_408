@@ -9,7 +9,7 @@ T void test_show_end(linked_queue::linked_queue<TYPE>* queue, int flag){
     if (!queue_check_empty(queue)){
         if (flag){
             std::cout << "front: ";
-            node_print(queue_get_front(queue));
+            node_print(queue_get_front_(queue));
         } else{
             std::cout << "tail: ";
             node_print(queue_get_tail(queue));

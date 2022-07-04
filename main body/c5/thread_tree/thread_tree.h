@@ -45,7 +45,7 @@ T thread_node<TYPE>* get_pointer(thread_node<TYPE>* r_node, bool pos){
 }
 
 // 打印线索树节点
-T bool r_node_print(thread_node<TYPE>* r_node){
+T UNUSED bool r_node_print(thread_node<TYPE>* r_node){
     if (r_node_check_null(r_node)){
         NULL_PTR;
     }

@@ -94,11 +94,16 @@ T void queue_print(linked_queue<TYPE> *queue) {
 }
 
 // 获取队头节点
-T queue_node<TYPE> *queue_get_front(linked_queue<TYPE> *queue) {
+T queue_node<TYPE> *queue_get_front_(linked_queue<TYPE> *queue) {
     if (queue_check_empty(queue)) {
         ILLEGAL_INDEX;
     }
     return node_get_next(&queue->body_pointer);
+}
+
+// 获取队头元素（自动拆箱）
+T TYPE queue_get_front(linked_queue<TYPE> *queue){
+    return queue_get_front_(queue)->data;
 }
 
 // 获取队尾节点
@@ -139,6 +144,14 @@ T queue_node<TYPE> *queue_pop_(linked_queue<TYPE> *queue) {
 // 将元素出队（自动拆箱）
 T TYPE queue_pop(linked_queue<TYPE> *queue){
     return queue_pop_(queue)->data;
+}
+
+// 将后一个链队合并至前一个链队
+T UNUSED void queue_merge(linked_queue<TYPE>* target, linked_queue<TYPE>* frac){
+    target->cnt += frac->cnt;
+    node_set_next(queue_get_tail(target), queue_get_front_(frac));
+    target->tail = frac->tail;
+    free(frac);
 }
 
 }
