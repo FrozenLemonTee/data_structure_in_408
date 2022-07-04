@@ -58,7 +58,7 @@ struct linked_queue {
     int cnt;
 };
 
-// 链栈初始化
+// 链队初始化
 T linked_queue<TYPE> *queue_init() {
     linked_queue<TYPE> *queue = (linked_queue<TYPE> *) malloc(sizeof(linked_queue<TYPE>));
     TYPE* e = (TYPE*)malloc(sizeof(TYPE));
