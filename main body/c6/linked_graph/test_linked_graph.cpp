@@ -57,16 +57,16 @@ void test_delete_side(linked_graph<int>* graph, int num){
 }
 
 int main(){
-    linked_graph<int>* graph1 = graph_init<int>(UNDIRECTED_GRAPH, nodes_create(20));
-    test_set_side(graph1, 1, 20);
+    linked_graph<int>* graph1 = graph_init<int>(UNDIRECTED_GRAPH, nodes_create(30));
+    test_set_side(graph1, 1, 100);
     print_separate();
-    test_get_degree(graph1, 20);
+    test_get_degree(graph1, 100);
     print_separate();
-    linked_graph<int>* graph2 = graph_init<int>(DIRECTED_GRAPH, nodes_create(20));
-    test_set_side(graph2, 1, 20);
+    linked_graph<int>* graph2 = graph_init<int>(DIRECTED_GRAPH, nodes_create(30));
+    test_set_side(graph2, 1, 100);
     print_separate();
-    test_get_degree(graph2, 20);
+    test_get_degree(graph2, 100);
     print_separate();
-    test_delete_side(graph2, 10);
+    test_delete_side(graph2, 50);
     return 0;
 }

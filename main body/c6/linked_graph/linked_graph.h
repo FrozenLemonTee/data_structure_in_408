@@ -55,11 +55,12 @@ T bool graph_get_type(linked_graph<TYPE>* graph){
 T int graph_find_side(linked_graph<TYPE>* graph, int node1, int node2){
     linked_list<array<int>>* list = graph->sides[node1];
     if (!list_check_empty(list)){
-        int node = list_find_by_index(list, 0).get(0);
+        list_node<array<int>>* pointer = list_find_by_index_(list, 0);
         for (int i = 0; i < list_length(list); ++i) {
-            if (node == node2){
+            if (pointer->data.get(0) == node2){
                 return i;
             }
+            pointer = pointer->next_node;
         }
     }
     return -1;

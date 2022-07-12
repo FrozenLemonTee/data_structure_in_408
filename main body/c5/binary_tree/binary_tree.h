@@ -142,15 +142,12 @@ T binary_tree<TYPE> *tree_init(array<TYPE> arr) {
 T int tree_delete_leaf_(tree_node<TYPE>* node){
     int total = 0;
     if (!node_check_null(node)){
-        total += tree_delete_leaf_(node_get_child(node, LEFT_CHILD));
-        if (!node_check_null(node_get_child(node, LEFT_CHILD))){
-            node_delete_leaf(node, LEFT_CHILD);
-            total += 1;
-        }
-        total += tree_delete_leaf_(node_get_child(node, RIGHT_CHILD));
-        if (!node_check_null(node_get_child(node, RIGHT_CHILD))){
-            node_delete_leaf(node, RIGHT_CHILD);
-            total += 1;
+        for (int pos = 0; pos < 2; ++pos) {
+            total += tree_delete_leaf_(node_get_child(node, pos));
+            if (!node_check_null(node_get_child(node, pos))){
+                node_delete_leaf(node, pos);
+                total += 1;
+            }
         }
     }
     return total;

@@ -166,7 +166,7 @@ T void list_insert_(linked_list<TYPE>* list, int index, list_node<TYPE>* node){
 }
 
 // 插入元素（自动装箱）
-T void list_insert(linked_list<TYPE>* list, int index, TYPE elem){
+T UNUSED void list_insert(linked_list<TYPE>* list, int index, TYPE elem){
     list_insert_(list, index, node_init(elem));
 }
 
