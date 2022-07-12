@@ -21,36 +21,6 @@ struct tree_node {
     tree_node<TYPE> *right; // 树节点右孩子指针域
 };
 
-// 判断传入的是否为空指针
-T bool node_check_null(tree_node<TYPE> *node) {
-    return !node;
-}
-
-// 判断节点是否有左孩子或者右孩子节点
-T bool node_has_child(tree_node<TYPE>* node, bool pos){
-    if (!pos){
-        return !node_check_null(node->left);
-    }
-    return !node_check_null(node->right);
-}
-
-// 获得当前节点的左孩子或者右孩子节点
-T tree_node<TYPE>* node_get_child(tree_node<TYPE>* node, bool pos){
-    if (!pos){
-        return node->left;
-    }
-    return node->right;
-}
-
-// 打印节点
-T void node_print(tree_node<TYPE> *node) {
-    if (node_check_null(node)) {
-        NULL_PTR;
-    }
-    std::cout << "(#" << node << ", " << node->data <<
-    ", L: #" << node_get_child(node, LEFT_CHILD) << ", R: #" << node_get_child(node, RIGHT_CHILD) << ")";
-}
-
 // 树节点构造函数
 T tree_node<TYPE> *tree_node_init(TYPE data) {
     tree_node<TYPE> *node = (tree_node<TYPE>*)malloc(sizeof(tree_node<TYPE>));
@@ -67,6 +37,51 @@ T void node_set_child(tree_node<TYPE> *node, bool pos, tree_node<TYPE> *child) {
     } else {
         node->right = child;
     }
+}
+
+// 判断传入的是否为空指针
+T bool node_check_null(tree_node<TYPE> *node) {
+    return !node;
+}
+
+// 判断节点是否有左孩子或者右孩子节点
+T bool node_has_child(tree_node<TYPE>* node, bool pos){
+    if (!pos){
+        return !node_check_null(node->left);
+    }
+    return !node_check_null(node->right);
+}
+
+// 判断节点是否为非叶子节点
+T bool node_has_children(tree_node<TYPE>* node){
+    return node_has_child(node, LEFT_CHILD) || node_has_child(node, RIGHT_CHILD);
+}
+
+// 获得当前节点的左孩子或者右孩子节点
+T tree_node<TYPE>* node_get_child(tree_node<TYPE>* node, bool pos){
+    if (!pos){
+        return node->left;
+    }
+    return node->right;
+}
+
+// 删除叶子节点
+T bool node_delete_leaf(tree_node<TYPE>* parent, bool pos){
+    if (node_has_child(parent, pos) && !node_has_children(node_get_child(parent, pos))){
+        free(node_get_child(parent, pos));
+        node_set_child(parent, pos, (tree_node<TYPE>*) nullptr);
+        return true;
+    }
+    return false;
+}
+
+// 打印节点
+T void node_print(tree_node<TYPE> *node) {
+    if (node_check_null(node)) {
+        NULL_PTR;
+    }
+    std::cout << "(#" << node << ", " << node->data <<
+    ", L: #" << node_get_child(node, LEFT_CHILD) << ", R: #" << node_get_child(node, RIGHT_CHILD) << ")";
 }
 
 // 二叉树定义
@@ -121,6 +136,42 @@ T binary_tree<TYPE> *tree_init(array<TYPE> arr) {
     free(queue_node);
     free(queue_order);
     return tree;
+}
+
+// 递归删除子树节点
+T int tree_delete_leaf_(tree_node<TYPE>* node){
+    int total = 0;
+    if (!node_check_null(node)){
+        total += tree_delete_leaf_(node_get_child(node, LEFT_CHILD));
+        if (!node_check_null(node_get_child(node, LEFT_CHILD))){
+            node_delete_leaf(node, LEFT_CHILD);
+            total += 1;
+        }
+        total += tree_delete_leaf_(node_get_child(node, RIGHT_CHILD));
+        if (!node_check_null(node_get_child(node, RIGHT_CHILD))){
+            node_delete_leaf(node, RIGHT_CHILD);
+            total += 1;
+        }
+    }
+    return total;
+}
+
+// 删除树的子树
+T void tree_delete_subtree(binary_tree<TYPE>* tree, tree_node<TYPE>* parent, bool pos){
+    int cnt = tree_delete_leaf_(node_get_child(parent, pos));
+    free(node_get_child(parent, pos));
+    node_set_child(parent, pos, (tree_node<TYPE>*) nullptr);
+    cnt += 1;
+    tree->cnt -= cnt;
+}
+
+// 删除树中的所有节点
+T void tree_delete_all(binary_tree<TYPE>* tree){
+    tree_delete_subtree(tree, tree->root, LEFT_CHILD);
+    tree_delete_subtree(tree, tree->root, RIGHT_CHILD);
+    tree->cnt = 0;
+    free(tree->root);
+    tree->root = (tree_node<TYPE>*) nullptr;
 }
 
 }
