@@ -44,6 +44,15 @@ T thread_node<TYPE>* get_pointer(thread_node<TYPE>* r_node, bool pos){
     return r_node->right;
 }
 
+// 设置节点的左右指针域
+T void set_pointer(thread_node<TYPE>* r_node, bool pos, thread_node<TYPE>* pointer){
+    if (!pos){
+        r_node->left = pointer;
+    } else{
+        r_node->right = pointer;
+    }
+}
+
 // 打印线索树节点
 T UNUSED bool r_node_print(thread_node<TYPE>* r_node){
     if (r_node_check_null(r_node)){
@@ -92,19 +101,14 @@ T thread_tree<TYPE>* r_tree_copy(binary_tree::binary_tree<TYPE>* b_tree){
     while (!linked_queue::queue_check_empty(b_nodes)){
         binary_tree::tree_node<TYPE>* cur_b = linked_queue::queue_pop(b_nodes);
         thread_node<TYPE>* cur_t = linked_queue::queue_pop(t_nodes);
-        binary_tree::tree_node<TYPE>* left = binary_tree::node_get_child(cur_b, LEFT);
-        if (!binary_tree::node_check_null(left)){
-            linked_queue::queue_push(b_nodes, left);
-            cur_t->left = r_node_init(left);
-            linked_queue::queue_push(t_nodes, cur_t->left);
-            tree->cnt += 1;
-        }
-        binary_tree::tree_node<TYPE>* right = binary_tree::node_get_child(cur_b, RIGHT);
-        if (!binary_tree::node_check_null(right)){
-            linked_queue::queue_push(b_nodes, right);
-            cur_t->right = r_node_init(right);
-            linked_queue::queue_push(t_nodes, cur_t->right);
-            tree->cnt += 1;
+        for (int pos = 0; pos < 2; ++pos) {
+            binary_tree::tree_node<TYPE>* child = binary_tree::node_get_child(cur_b, pos);
+            if (!binary_tree::node_check_null(child)){
+                linked_queue::queue_push(b_nodes, child);
+                set_pointer(cur_t, pos, r_node_init(child));
+                linked_queue::queue_push(t_nodes, get_pointer(cur_t, pos));
+                tree->cnt += 1;
+            }
         }
     }
     return tree;
