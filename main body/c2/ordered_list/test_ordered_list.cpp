@@ -31,7 +31,7 @@ void test_pop(ordered_list* list, int num){
 void test_find_val(ordered_list* list, int num){
     for (int i = 0; i < num; ++i) {
         int val = rand_range(0, 2 * LEN);
-        int index = list_locate_elem(list, val);
+        int index = list_locate(list, val);
         std::cout << "cur val: " << val << ", " << "cur elem index: " << index << " ";
         list_print(list);
         std::cout << std::endl;

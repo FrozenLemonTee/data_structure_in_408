@@ -1,14 +1,11 @@
+#ifndef C_C___GLOBAL_H
+#define C_C___GLOBAL_H
+
+#define UNUSED __attribute__((unused)) // 取消未使用的标记
 #include <iostream>
 #include <initializer_list>
 #include "cstring"
 #include "cmath"
-
-#ifndef C_C___GLOBAL_H
-#define C_C___GLOBAL_H
-
-#endif //C_C___GLOBAL_H
-#define UNUSED __attribute__((unused)) // 取消未使用的标记
-
 #define T template<typename TYPE> // 定义模板参数
 void error(const char* err_msg, int err_code);
 T void swap(TYPE &a, TYPE &b);
@@ -152,6 +149,9 @@ char rand_alpha(){
 
 // 生成两个字母间的任意字母
 char rand_alpha(char a, char b){
+    if (a >= b){
+        swap(a, b);
+    }
     if (islower(a)){
         return rand_range(tolower(min(a, b)), (abs(a - tolower(b))) % 26 + 1);
     }
@@ -185,3 +185,5 @@ char* rand_num_s(int digits){
     res[digits] = '\0';
     return res;
 }
+
+#endif //C_C___GLOBAL_H

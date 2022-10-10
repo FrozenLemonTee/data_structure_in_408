@@ -17,7 +17,7 @@ T bool higher_priority(TYPE a, TYPE b, int key){
 }
 
 // 选择排序
-T void select_sort(array<TYPE> arr, int key){
+T void select_sort(array<TYPE> arr, int key = 0){
     for (int i = 0; i < arr.size(); ++i) {
         int index = i;
         for (int j = i + 1; j < arr.size(); ++j) {
@@ -30,7 +30,7 @@ T void select_sort(array<TYPE> arr, int key){
 }
 
 // 插入类排序内部模板
-T void distance_insert(array<TYPE> arr, int distance, int key){
+T void distance_insert(array<TYPE> arr, int distance, int key = 0){
     for (int i = 0; i < arr.size() - distance; i += distance) {
         for (int j = i; j >= 0; j -= distance) {
             if (higher_priority(arr.get(j + distance), arr.get(j), key)){
@@ -41,19 +41,19 @@ T void distance_insert(array<TYPE> arr, int distance, int key){
 }
 
 // 简单插入排序
-T void insert_sort(array<TYPE> arr, int key){
+T void insert_sort(array<TYPE> arr, int key = 0){
     distance_insert(arr, 1, key);
 }
 
 // 希尔插入排序
-T void shell_sort(array<TYPE> arr, int key){
+T void shell_sort(array<TYPE> arr, int key = 0){
     for (int i = arr.size() / 2; i > 0; i /= 2) {
         distance_insert(arr, i, key);
     }
 }
 
 // 快速排序区间分块
-T int partition(array<TYPE> arr, int l_bound, int r_bound, int key){
+T int partition(array<TYPE> arr, int l_bound, int r_bound, int key = 0){
     int ori = rand_range(l_bound, r_bound - l_bound);
     TYPE tmp = arr.get(ori);
     arr.exchange(l_bound, ori);
@@ -82,7 +82,7 @@ T int partition(array<TYPE> arr, int l_bound, int r_bound, int key){
 }
 
 // 快速排序主函数
-T void _quick_sort(array<TYPE> arr, int l_bound, int r_bound, int key){
+T void _quick_sort(array<TYPE> arr, int l_bound, int r_bound, int key = 0){
     if (l_bound < r_bound){
         int mid = partition(arr, l_bound, r_bound, key);
         _quick_sort(arr, l_bound, mid - 1, key);
@@ -91,12 +91,12 @@ T void _quick_sort(array<TYPE> arr, int l_bound, int r_bound, int key){
 }
 
 // 快速排序
-T void quick_sort(array<TYPE> arr, int key){
+T void quick_sort(array<TYPE> arr, int key = 0){
     _quick_sort(arr, 0, arr.size() - 1, key);
 }
 
 // 冒泡排序
-T void bubble_sort(array<TYPE> arr, int key){
+T void bubble_sort(array<TYPE> arr, int key = 0){
     for (int i = 0; i < arr.size(); ++i) {
         for (int j = 0; j < arr.size() - 1 - i; ++j) {
             if (higher_priority(arr.get(j + 1), arr.get(j), key)){
@@ -107,7 +107,7 @@ T void bubble_sort(array<TYPE> arr, int key){
 }
 
 // 归并排序主函数
-T void _merge_sort(array<TYPE> arr, int l_bound, int r_bound, int key){
+T void _merge_sort(array<TYPE> arr, int l_bound, int r_bound, int key = 0){
     if (r_bound - l_bound > 1){
         int mid = (l_bound + r_bound) / 2;
         _merge_sort(arr, l_bound, mid, key);
@@ -143,12 +143,12 @@ T void _merge_sort(array<TYPE> arr, int l_bound, int r_bound, int key){
 }
 
 // 归并排序
-T void merge_sort(array<TYPE> arr, int key){
+T void merge_sort(array<TYPE> arr, int key = 0){
     _merge_sort(arr, 0, arr.size(), key);
 }
 
 // 获取子节点中优先级最大的节点的序号
-T int get_prior_node(array<TYPE> arr, int parent, int range, int key){
+T int get_prior_node(array<TYPE> arr, int parent, int range, int key = 0){
     if (parent * 2 + 1 <= range){
         return higher_priority(arr.get(parent * 2 - 1), arr.get(parent * 2), key) ? parent * 2 : parent * 2 + 1;
     }
@@ -156,7 +156,7 @@ T int get_prior_node(array<TYPE> arr, int parent, int range, int key){
 }
 
 // 堆排序下沉操作
-T void down(array<TYPE> arr, int order, int range, int key){
+T void down(array<TYPE> arr, int order, int range, int key = 0){
     int cur = order;
     while (cur * 2 <= range){
         int child = get_prior_node(arr, cur, range, key);
@@ -170,7 +170,7 @@ T void down(array<TYPE> arr, int order, int range, int key){
 }
 
 // 堆排序
-T void heap_sort(array<TYPE> arr, int key){
+T void heap_sort(array<TYPE> arr, int key = 0){
     for (int i = arr.size() / 2; i > 0; --i) {
         down(arr, i, arr.size(), !key);
     }
@@ -190,7 +190,7 @@ array<linked_list<char*>*> buckets_build(){
 }
 
 // 基数排序
-void radix_sort(array<char*> arr, int key){
+void radix_sort(array<char*> arr, int key = 0){
     int len = char_length(arr.get(0));
     array<linked_list<char*>*> buckets = buckets_build();
     for (int i = 0; i < len; ++i) {

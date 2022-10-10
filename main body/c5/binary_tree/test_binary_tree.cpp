@@ -22,5 +22,10 @@ int main(){
     std::cout << std::endl;
     binary_tree::binary_tree<int>* tree2 = binary_tree::tree_init<int>(arr);
     std::cout << tree_check_empty(tree2) << std::endl;
+//    binary_tree::binary_tree<int>* tree3 = binary_tree::tree_init(array<int>(5));
+//    binary_tree::tree_node<int>* child = tree3->root->left;
+//    binary_tree::node_print(child);
+//    *child = *binary_tree::tree_node_init(6);
+//    binary_tree::node_print(tree3->root->left);
     return 0;
 }

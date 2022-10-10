@@ -189,7 +189,7 @@ T TYPE list_pop(linked_list<TYPE>* list){
 }
 
 // 弹出链表中的节点并返回
-T list_node<TYPE>* list_pop_(linked_list<TYPE>* list, int index){
+T list_node<TYPE>* list_pop_(linked_list<TYPE>* list, int index = 0){
     if (list_check_empty(list)){
         POP_ERROR;
     } else if (!list_check_index(list, index)){
@@ -208,7 +208,7 @@ T list_node<TYPE>* list_pop_(linked_list<TYPE>* list, int index){
 }
 
 // 弹出元素（自动拆箱）
-T TYPE list_pop(linked_list<TYPE>* list, int index){
+T TYPE list_pop(linked_list<TYPE>* list, int index = 0){
     return list_pop_(list, index)->data;
 }
 
