@@ -23,8 +23,8 @@ void delete_duplicate(ordered_list* list){
 void test(int cnt){
     for (int i = 0; i < cnt; ++i) {
         ordered_list* list = list_init(LEN);
-        for (int j = 0; j < LEN * 0.4; ++j) {
-            list_insert(list, list_length(list), rand_range(0, LEN));
+        for (int j = 0; j < LEN * 0.8; ++j) {
+            list_insert(list, list_length(list), rand_range(0, LEN * 0.4));
         }
         std::cout << "before: ";
         list_print(list);
@@ -37,6 +37,6 @@ void test(int cnt){
 }
 
 int main(){
-    test(LEN * 0.2);
+    test(LEN * 2);
     return 0;
 }

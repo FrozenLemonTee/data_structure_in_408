@@ -71,18 +71,38 @@ public:
         swap(this->body[index1], this->body[index2]);
     }
 
-    void print(){
+    void print(bool enter = false){
         std::cout << "[";
         for (int i = 0; i < this->size(); ++i) {
             std::cout << this->body[i] << ", ";
         }
         std::cout << "]";
+        if (enter){
+            std::cout << std::endl;
+        }
     }
 };
 
+// 将两个数组各自的一部分合并成一个新的数组（参数范围左闭右开）
+T array<TYPE> join(array<TYPE> master, int start1, int end1,
+                   array<TYPE> slave = array<TYPE>(0), int start2 = 0, int end2 = 0){
+    array<TYPE> res = array<TYPE>(end1 - start1 + end2 - start2);
+    int index = 0;
+    for (int i = start1; i < end1; ++i, ++index) {
+        res.set(index, master.get(i));
+    }
+    for (int i = start2; i < end2; ++i, ++index) {
+        res.set(index, slave.get(i));
+    }
+    return res;
+}
+
 // 打印分隔线
-void print_separate(){
-    std::cout << "-----------------------" << std::endl;
+void print_separate(bool enter = true){
+    std::cout << "-----------------------";
+    if (enter){
+        std::cout << std::endl;
+    }
 }
 
 // 计算字符串的长度
