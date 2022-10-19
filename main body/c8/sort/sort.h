@@ -5,7 +5,6 @@
 #ifndef C_C___SORT_H
 #define C_C___SORT_H
 
-#endif //C_C___SORT_H
 #include <main body/c2/linked_list/linked_list.h>
 
 // key为0时为升序模式，为1时为降序模式
@@ -207,3 +206,5 @@ void radix_sort(array<char*> arr, int key = 0){
         }
     }
 }
+
+#endif //C_C___SORT_H
