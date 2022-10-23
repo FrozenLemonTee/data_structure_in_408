@@ -5,7 +5,6 @@
 #ifndef C_C___ADJACENCY_GRAPH_H
 #define C_C___ADJACENCY_GRAPH_H
 
-#endif //C_C___ADJACENCY_GRAPH_H
 #include "global.h"
 
 #define DIRECTED_GRAPH 1
@@ -108,3 +107,5 @@ T void graph_print(adjacency_graph<TYPE>* graph){
         std::cout << std::endl;
     }
 }
+
+#endif //C_C___ADJACENCY_GRAPH_H
