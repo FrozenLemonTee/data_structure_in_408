@@ -4,6 +4,7 @@
 
 #include "main body/c2/linked_list/linked_list.h"
 
+// 2023 2.3 01.
 void list_invert(linked_list<int>* list){
     for (int i = 0; i < list_length(list) / 2; ++i) {
         swap(list_find_by_index_(list, i)->data,

@@ -4,6 +4,7 @@
 
 #include "global.h"
 
+// 2023 2.3 01.
 typedef struct node{
     int data;
     node* next;

@@ -4,6 +4,7 @@
 
 #include "main body/c2/linked_list/linked_list.h"
 
+// 2023 2.3 03.
 T void list_recur_print(linked_list<TYPE>* list, list_node<TYPE>* node){
     if (node->next_node){
         list_recur_print(list, node->next_node);

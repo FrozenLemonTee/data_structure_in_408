@@ -4,6 +4,7 @@
 
 #include "main body/c2/linked_list/linked_list.h"
 
+// 2023 2.3 04.
 bool list_delete_min(linked_list<int>* list){
     if (!list_check_empty(list)){
         list_node<int>* pointer = &list->body_pointer;
