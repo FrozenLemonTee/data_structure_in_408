@@ -16,7 +16,7 @@ T struct list_node{
 
 // 打印节点
 T void node_print(list_node<TYPE>* node){
-    std::cout << "(" << node->data << ", #" << node->next_node << ")";
+    std::cout << "(#" << node << ", " << node->data << ", #" << node->next_node << ")";
 }
 
 // 设置节点数据域的值
@@ -51,7 +51,7 @@ T int list_length(linked_list<TYPE>* list){
 }
 
 // 打印单链表
-T void list_print(linked_list<TYPE>* list){
+T void list_print(linked_list<TYPE>* list, bool enter = false){
     std::cout << "[";
     list_node<TYPE>* pointer = list->body_pointer.next_node;
     if (list_length(list)){
@@ -63,6 +63,9 @@ T void list_print(linked_list<TYPE>* list){
         node_print(pointer);
     }
     std::cout << "]";
+    if (enter){
+        std::cout <<std::endl;
+    }
 }
 
 // 检查链表是否为空
